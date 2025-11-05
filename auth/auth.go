@@ -29,7 +29,7 @@ func CreateUsersFile(pfilename string, pUser UserInfo) error {
 
 	defer writer.Flush()
 
-	err = writer.Write([]string{pUser.UserName, pUser.Email, pUser.Password})
+	err = writer.Write([]string{pUser.UserName, pUser.Email, pUser.Password_hash})
 	if err != nil {
 		log.Printf("Error while writing the file %v", err)
 		return err
@@ -63,7 +63,7 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if req.UserName == "" || req.Password == "" || req.Email == "" {
+	if req.UserName == "" || req.Password_hash == "" || req.Email == "" {
 		log.Printf("required user information is missing @ ASU004")
 		http.Error(w, "missing required fields of data", http.StatusBadRequest)
 		return
@@ -114,7 +114,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if (req.UserName == "" || req.Email == "") && req.Password == "" {
+	if (req.UserName == "" || req.Email == "") && req.Password_hash == "" {
 		log.Printf("required user information is missing @ ASU004")
 		http.Error(w, "missing required fields of data", http.StatusBadRequest)
 		return
@@ -122,7 +122,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	var isExist bool
 	var currUser UserInfo
 	for _, user := range Users {
-		if (req.Email == user.Email || req.UserName == user.UserName) && req.Password == user.Password {
+		if (req.Email == user.Email || req.UserName == user.UserName) && req.Password_hash == user.Password_hash {
 			isExist = true
 			currUser = user
 			break

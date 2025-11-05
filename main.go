@@ -13,7 +13,7 @@ import (
 
 func main() {
 
-	logfilename := fmt.Sprintf("apilog%v", time.Now())
+	logfilename := fmt.Sprintf("./log/apilog%v", time.Now())
 
 	file, err := os.OpenFile(logfilename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
