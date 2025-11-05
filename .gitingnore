@@ -1,0 +1,48 @@
+# =========================
+# 🟦 Go (Backend)
+# =========================
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Build directories
+bin/
+build/
+dist/
+
+# Go workspace
+*.log
+*.tmp
+*.cache
+*.swp
+*.bak
+
+# Go modules and dependencies (kept)
+!go.mod
+!go.sum
+
+# Local environment files
+.env
+.env.*
+config.yaml
+config.yml
+*.local.json
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.iml
+
+# Coverage / profiling output
+coverage.out
+profile.out
+
+# Logs
+/logs/
+*.log
