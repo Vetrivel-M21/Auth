@@ -27,7 +27,7 @@ func main() {
 	log.SetOutput(file)
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-	lErr := db.Connect("ST954", "Best@123", "192.168.2.5", "3306", "training")
+	lErr := db.OpenConnection()
 	if lErr != nil {
 		log.Println("Error while database connection (MAIN 001) ", lErr)
 		return

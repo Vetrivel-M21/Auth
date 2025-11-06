@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"auth/config"
 	"fmt"
 	"log"
 	"net/http"
@@ -18,16 +19,15 @@ func isPublicApi(r *http.Request) bool {
 	return publicRoute[path]
 }
 
-var SecretKey = []byte("your-secret-key")
-
 func validateToken(pJwtToken string) (string, error) {
 
+	log.Println("KEY ::: @ ", config.SecretKey)
 	token, err := jwt.Parse(pJwtToken, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			log.Printf("unexpected signing method %v MVT001", token.Header["alg"])
 			return nil, fmt.Errorf(" unexpected signing method MVT001 :: @ ::%v : ", token.Header["alg"])
 		}
-		return SecretKey, nil
+		return []byte(config.SecretKey), nil
 	})
 	if err != nil {
 		log.Printf("Error while parsing the data MVT002  :: @ :: %v", err)

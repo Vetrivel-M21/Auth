@@ -1,6 +1,8 @@
 package db
 
 import (
+	"auth/common"
+	"auth/config"
 	"fmt"
 	"log"
 
@@ -10,6 +12,24 @@ import (
 
 // DB is the global database connection
 var DB *gorm.DB
+
+func OpenConnection() error {
+	var cfg config.Config
+
+	if err := common.LoadTOMLConfig("../dbconfig.toml", &cfg); err != nil {
+		log.Println("Error while load toml (DOC001)", err)
+		log.Fatal(err)
+	}
+
+	config.SecretKey = cfg.SECRET_KEY
+
+	lErr := Connect(cfg.DB_USER, cfg.DB_PASS, cfg.DB_HOST, cfg.DB_PORT, cfg.DB_NAME)
+	if lErr != nil {
+		log.Println("Connetion Failed (DOC002)", lErr)
+		return lErr
+	}
+	return nil
+}
 
 // Connect initializes the database connection
 func Connect(pDbUser, pDbPass, pDbHost, pDbPort, pDbName string) error {
