@@ -44,5 +44,7 @@ coverage.out
 profile.out
 
 # Logs
-/logs/
-*.log
+/log/
+
+
+apilog*.txt
