@@ -2,6 +2,7 @@ package main
 
 import (
 	"auth/auth"
+	"auth/db"
 	"auth/middleware"
 	"auth/usecase"
 	"fmt"
@@ -13,7 +14,7 @@ import (
 
 func main() {
 
-	logfilename := fmt.Sprintf("./log/apilog%v", time.Now())
+	logfilename := fmt.Sprintf("./log/apilog%v.txt", time.Now())
 
 	file, err := os.OpenFile(logfilename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
@@ -25,6 +26,12 @@ func main() {
 
 	log.SetOutput(file)
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
+
+	lErr := db.Connect("ST954", "Best@123", "192.168.2.5", "3306", "training")
+	if lErr != nil {
+		log.Println("Error while database connection (MAIN 001) ", lErr)
+		return
+	}
 
 	mux := http.NewServeMux()
 
